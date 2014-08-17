@@ -30,9 +30,8 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	Timer animate = new Timer(25,this);
 	public static Player player = new Player(new Point2D.Double(100,100));
 	public void init(){
-		playerImg = getImage(getCodeBase(),"/Stuff.jpg");
 		Registry.registerLevels();
-		Registry.setLevel(1);
+		Registry.setLevel(0);
 		setSize(1280,700);
 		if(!debug){
 		animate.start();

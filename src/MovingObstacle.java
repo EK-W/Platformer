@@ -49,8 +49,7 @@ public class MovingObstacle extends Obstacle{
 		double tdY = ((dY == 0) ? 0:dY/Math.abs(dY));
 		Point2D current = new Point2D.Double();
 		boolean moveXWithPlayer = false;
-		//System.out.println(tdX);
-		//System.out.println(dX + " | " + dY + " ~ " + oldPoint.getX() + " | " + oldPoint.getY() + " ~ " + newPoint.getX() + " | " + newPoint.getY());
+		
 		if(Display.player.me(0,1).intersects(super.phys)||Display.player.me(1,0).intersects(super.phys)||Display.player.me(-1,0).intersects(super.phys)){
 			moveXWithPlayer=true;
 		}

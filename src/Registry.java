@@ -22,10 +22,12 @@ public class Registry {
 	public static void setLevel(int num){
 		levelNum=num; 
 		current = levels[levelNum];
+		Display.player.loc=current.startLocation;
 	}
 
 	private static void register0(){
-		levels[0].define(
+		levels[0].define(0,new Point2D.Double(100,100),new Rectangle2D.Double(1270,0,10,800),levels[1]);
+		levels[0].defineObstacles(
 				new Obstacle(new Rectangle2D.Double(635,125,745,800),new Color(60,46,7)),
 				new Obstacle(new Rectangle2D.Double(635,125,745,5),new Color(36,148,2)),
 				new Obstacle(new Rectangle2D.Double(-100,600,1480,200),new Color(60,46,7)),
@@ -45,13 +47,15 @@ public class Registry {
 	}
 
 	private static void register1(){
-		levels[1].define(
+		levels[1].define(1,new Point2D.Double(100,100),new Rectangle2D.Double(1270,0,10,800),levels[2]);
+		levels[1].defineObstacles(
 				new Obstacle(new Rectangle2D.Double(530,125,75,30),new Color(88,88,88))
 				);
 		
 	}
 	private static void register2(){
-		levels[2].define(
+		levels[2].define(2,new Point2D.Double(100,100),new Rectangle2D.Double(1270,0,10,800),levels[0]);
+		levels[2].defineObstacles(
 				);
 		
 		

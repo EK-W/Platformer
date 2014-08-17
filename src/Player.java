@@ -61,6 +61,9 @@ public class Player {
 		if(go){
 			loc.setLocation(loc.getX(),loc.getY()+yVel);
 		}
+		if(me().intersects(Registry.current.endLocation)){
+			Registry.setLevel(Registry.current.nextLevel.levelNum);
+		}
 		}
 //		int precision = 100;
 //		double unitX = xVel/precision;
