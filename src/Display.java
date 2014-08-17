@@ -3,6 +3,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -24,10 +25,12 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	public static boolean down = false;
 	boolean debug = false;
 	Point2D mouseLoc = new Point2D.Double();
+	Image playerImg;
 	
 	Timer animate = new Timer(25,this);
 	public static Player player = new Player(new Point2D.Double(100,100));
 	public void init(){
+		playerImg = getImage(getCodeBase(),"/Stuff.jpg");
 		Registry.registerLevels();
 		Registry.setLevel(1);
 		setSize(1280,700);
@@ -41,12 +44,19 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	public void paint(Graphics g2){
 		Graphics2D g = (Graphics2D) g2;
 		Registry.current.drawLevel(g);
-		g.setColor(Color.red);
-		g.fill(player.me());
+		player.loadImage(g);
+		if(player.dead){
+			g.drawString("Game Over",100,100);
+		}
+		if(debug){
+		g.setColor(Color.black);
 		g.drawString(String.valueOf(mouseLoc.getX()),5,15);
 		g.drawString(String.valueOf(mouseLoc.getY()),5,30);
 		g.drawString(String.valueOf(player.loc.getX()),5,45);
 		g.drawString(String.valueOf(player.loc.getY()),5,60);
+		g.setColor(Color.red);
+		g.fill(player.me());
+		}
 	}
 	
 	
@@ -91,5 +101,4 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	public void mouseMoved(MouseEvent e) {
 		mouseLoc.setLocation(e.getPoint());	
 	}
-	
 }

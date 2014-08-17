@@ -6,7 +6,7 @@ public class Level {
 	public Obstacle[] levelComponents = new Obstacle[1];
 	public Obstacle[] levelBackground = new Obstacle[1];
 	void define(Obstacle... obstacles){
-		levelComponents = new Obstacle[obstacles.length];
+		levelComponents = new Obstacle[obstacles.length+3];
 		for(int i=0;i<obstacles.length;i++){
 			levelComponents[i]=obstacles[i];
 		}

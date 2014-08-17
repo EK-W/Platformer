@@ -42,6 +42,7 @@ public class MovingObstacle extends Obstacle{
 	
 	@Override
 	public void fill(Graphics2D g){
+		if(!Display.player.dead){
 		double dX = newPoint.getX()-oldPoint.getX();
 		double dY = newPoint.getY()-oldPoint.getY();
 		double tdX = ((dX == 0) ? 0:dX/Math.abs(dX));
@@ -56,15 +57,24 @@ public class MovingObstacle extends Obstacle{
 		current.setLocation(super.phys.getX(),super.phys.getY());
 		super.phys=new Rectangle2D.Double(oldPoint.getX()+((dX/100)*percent),super.phys.getY(),
 				super.phys.getWidth(),super.phys.getHeight());
-		
+		if(super.phys.intersects(Display.player.me())){
 		while(super.phys.intersects(Display.player.me())){
-			Display.player.loc.setLocation(Display.player.loc.getX()-(1*tdX),Display.player.loc.getY());
+			Display.player.loc.setLocation(Display.player.loc.getX()+(tdX*forwards),Display.player.loc.getY());
+		}
+		if(!super.phys.intersects(Display.player.me())&&Display.player.hitsObstacle(Display.player.me())){
+			Display.player.dead=true;
+		}
 		}
 		//if(Display.player.me(0,1).intersects(super.phys))
 		super.phys=new Rectangle2D.Double(super.phys.getX(),oldPoint.getY()+((dY/100)*percent),
 				super.phys.getWidth(),super.phys.getHeight());
+		if(super.phys.intersects(Display.player.me())){
 		while(super.phys.intersects(Display.player.me())){
-			Display.player.loc.setLocation(Display.player.loc.getX(),Display.player.loc.getY()-(1*tdY));
+			Display.player.loc.setLocation(Display.player.loc.getX(),Display.player.loc.getY()+(tdY*forwards));
+		}
+		if(!super.phys.intersects(Display.player.me())&&Display.player.hitsObstacle(Display.player.me())){
+			Display.player.dead=true;
+		}
 		}
 		if(percent==100){
 			forwards=-1;
@@ -79,8 +89,10 @@ public class MovingObstacle extends Obstacle{
 		if(moveXWithPlayer){
 		Display.player.loc.setLocation(Display.player.loc.getX()+(super.phys.getX()-current.getX()),Display.player.loc.getY());
 		}
+	}
 		g.setColor(col);
 		g.fill(super.phys);
+		
 	}
 
 }

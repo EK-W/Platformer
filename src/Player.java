@@ -1,17 +1,28 @@
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
 
 
 public class Player {
 	int jumpHeight = 30;
 	Point2D loc;
-	double width = 20;
+	public boolean dead = false;
+	double width = 13;
 	double height = 35;
 	double xVel = 0;
 	double yVel = 0;
 	double distanceX=0;
 	double distanceY=0;
 	void doMovement(){
+		if(!dead){
 		if(hitsObstacle(me(0,1))){
 			if(Display.up)yVel-=jumpHeight;
 		}else{
@@ -50,6 +61,7 @@ public class Player {
 		if(go){
 			loc.setLocation(loc.getX(),loc.getY()+yVel);
 		}
+		}
 //		int precision = 100;
 //		double unitX = xVel/precision;
 //		double unitY = yVel/precision;
@@ -82,6 +94,17 @@ public class Player {
 	}
 	public Rectangle2D me(double addX, double addY){
 		return new Rectangle2D.Double(addX+(loc.getX()-(width)/2),addY+loc.getY()-height,width,height);
+	}
+	public void loadImage(Graphics2D g){
+		File here = new File(".");
+		String location = ".";
+		try {
+		    location = here.getCanonicalPath().substring(0,here.getCanonicalPath().length()-3);
+		    Image img = ImageIO.read(new File(location+"UniRobot1.png"));
+		    g.drawImage((BufferedImage) img,null,(int)Math.round(me().getX()),(int)Math.round(me().getY()));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
 	}
 	
 }

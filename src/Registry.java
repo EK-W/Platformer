@@ -8,7 +8,8 @@ public class Registry {
 	public static int levelNum = 1;
 	public static Level[] levels = new Level[3];
 	public static Level current;
-	
+//  new Obstacle(new Rectangle2D.Double(530,125,75,30),new Color(88,88,88)),
+//	new MovingObstacle(new Rectangle2D.Double(0,800,100,50),Color.black,new Point2D.Double(0,0), 1),
 	public static void registerLevels(){
 		for(int i=0;i<levels.length;i++){
 			levels[i]=new Level();
@@ -45,7 +46,7 @@ public class Registry {
 
 	private static void register1(){
 		levels[1].define(
-				
+				new Obstacle(new Rectangle2D.Double(530,125,75,30),new Color(88,88,88))
 				);
 		
 	}
