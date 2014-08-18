@@ -15,4 +15,8 @@ public void fill(Graphics2D g){
 	g.setColor(col);
 	g.fill(phys);
 }
+public Obstacle(Obstacle o){
+	phys=o.phys;
+	col=o.col;
+}
 }

@@ -35,9 +35,12 @@ public class Level {
 	public void drawLevel(Graphics2D g){
 		for(int i=0;i<levelBackground.length;i++)if(levelBackground[i]!=null)levelBackground[i].fill(g);
 		for(int i=0;i<levelComponents.length;i++)if(levelComponents[i]!=null)levelComponents[i].fill(g);
+		
+		
+		
+	}
+	public void drawForeground(Graphics2D g){
 		for(int i=0;i<levelForeground.length;i++)if(levelForeground[i]!=null)levelForeground[i].fill(g);
-		
-		
 	}
 	
 

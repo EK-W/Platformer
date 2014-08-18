@@ -23,6 +23,7 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	public static boolean right = false;
 	public static boolean up = false;
 	public static boolean down = false;
+	
 	boolean debug = false;
 	Point2D mouseLoc = new Point2D.Double();
 	Image playerImg;
@@ -31,7 +32,7 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	public static Player player = new Player(new Point2D.Double(100,100));
 	public void init(){
 		Registry.registerLevels();
-		Registry.setLevel(0);
+		Registry.setLevel(1);
 		setSize(1280,700);
 		if(!debug){
 		animate.start();
@@ -42,8 +43,11 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	
 	public void paint(Graphics g2){
 		Graphics2D g = (Graphics2D) g2;
+		
 		Registry.current.drawLevel(g);
 		player.loadImage(g);
+		Registry.current.drawForeground(g);
+		
 		if(player.dead){
 			g.drawString("Game Over",100,100);
 		}

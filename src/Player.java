@@ -21,7 +21,11 @@ public class Player {
 	double yVel = 0;
 	double distanceX=0;
 	double distanceY=0;
+	int animationPhase=0;
 	void doMovement(){
+	if(hitsObstacle(me())){
+		dead=true;
+	}
 		if(!dead){
 		if(hitsObstacle(me(0,1))){
 			if(Display.up)yVel-=jumpHeight;
@@ -101,13 +105,23 @@ public class Player {
 	public void loadImage(Graphics2D g){
 		File here = new File(".");
 		String location = ".";
+		if(xVel>5){
+			animationPhase++;
+			animationPhase = Modular(animationPhase,4);
+		}
+		if(xVel<-5){
+			animationPhase--;
+			animationPhase = Modular(animationPhase,4);
+		}
 		try {
 		    location = here.getCanonicalPath().substring(0,here.getCanonicalPath().length()-3);
-		    Image img = ImageIO.read(new File(location+"UniRobot1.png"));
+		    Image img = ImageIO.read(new File(location+"UniRobot1/UniRobot1_"+animationPhase+".png"));
 		    g.drawImage((BufferedImage) img,null,(int)Math.round(me().getX()),(int)Math.round(me().getY()));
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
 	}
-	
+	int Modular(double number, double mod){
+		 return (int) (((number % mod) + mod) % mod);
+	}
 }
