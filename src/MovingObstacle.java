@@ -89,8 +89,7 @@ public class MovingObstacle extends Obstacle{
 		Display.player.loc.setLocation(Display.player.loc.getX()+(super.phys.getX()-current.getX()),Display.player.loc.getY());
 		}
 	}
-		g.setColor(col);
-		g.fill(super.phys);
+		super.fill(g);
 		
 	}
 

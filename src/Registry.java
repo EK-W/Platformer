@@ -18,7 +18,6 @@ public class Registry {
 		register1();
 		register2();
 		}
-	
 	public static void setLevel(int num){
 		levelNum=num; 
 		current = levels[levelNum];
@@ -26,7 +25,7 @@ public class Registry {
 	}
 
 	private static void register0(){
-		levels[0].define(0,new Point2D.Double(100,100),new Rectangle2D.Double(1270,0,10,800),levels[1]);
+		levels[0].define(0,new Point2D.Double(100,100),new Rectangle2D.Double(1270,0,10,800),levels[1],Level.MOUNTAINS);
 		levels[0].defineObstacles(
 				new Obstacle(new Rectangle2D.Double(635,125,745,800),new Color(60,46,7)),
 				new Obstacle(new Rectangle2D.Double(635,125,745,5),new Color(36,148,2)),
@@ -47,11 +46,30 @@ public class Registry {
 	}
 
 	private static void register1(){
-		levels[1].define(1,new Point2D.Double(25,100),new Rectangle2D.Double(1270,0,10,800),levels[2]);
+		levels[1].define(1,new Point2D.Double(25,100),new Rectangle2D.Double(1270,0,10,800),levels[2],Level.VOLCANO);
 		levels[1].defineObstacles(
 				new Obstacle(new Rectangle2D.Double(-100,150,300,800),new Color(60,46,7)),
-				//new DeadlyObstacle(new MovingObstacle2(new Rectangle2D.Double(-100,600,1480,200),Color.red,new Point2D.Double(-100,0),1))
-				new MovingObstacle2(new Rectangle2D.Double(-100,600,1480,200),Color.red,new Point2D.Double(-100,0),1)
+				new BouncingObstacle(new Rectangle2D.Double(200,150,100,25),new Color(60,46,7),0.75,3),
+				new BouncingObstacle(new Rectangle2D.Double(400,150,100,25),new Color(60,46,7),0.75,3),
+				new BouncingObstacle(new Rectangle2D.Double(600,150,100,25),new Color(60,46,7),0.75,3),
+				new BouncingObstacle(new Rectangle2D.Double(800,150,100,25),new Color(60,46,7),0.75,3),
+				
+				new DeadlyMovingObstacle(new Rectangle2D.Double(300,675,25,25),Color.red,new Point2D.Double(300,0), 5),
+				new DeadlyMovingObstacle(new Rectangle2D.Double(325,675,25,25),Color.red,new Point2D.Double(325,0), 6),
+				new DeadlyMovingObstacle(new Rectangle2D.Double(350,675,25,25),Color.red,new Point2D.Double(350,0), 4),
+				new DeadlyMovingObstacle(new Rectangle2D.Double(375,675,25,25),Color.red,new Point2D.Double(375,0), 7),
+				
+				new DeadlyMovingObstacle(new Rectangle2D.Double(500,675,25,25),Color.red,new Point2D.Double(500,0), 5),
+				new DeadlyMovingObstacle(new Rectangle2D.Double(525,675,25,25),Color.red,new Point2D.Double(525,0), 6),
+				new DeadlyMovingObstacle(new Rectangle2D.Double(550,675,25,25),Color.red,new Point2D.Double(550,0), 4),
+				new DeadlyMovingObstacle(new Rectangle2D.Double(575,675,25,25),Color.red,new Point2D.Double(575,0), 7),
+				
+				new DeadlyMovingObstacle(new Rectangle2D.Double(700,675,25,25),Color.red,new Point2D.Double(700,0), 5),
+				new DeadlyMovingObstacle(new Rectangle2D.Double(725,675,25,25),Color.red,new Point2D.Double(725,0), 6),
+				new DeadlyMovingObstacle(new Rectangle2D.Double(750,675,25,25),Color.red,new Point2D.Double(750,0), 4),
+				new DeadlyMovingObstacle(new Rectangle2D.Double(775,675,25,25),Color.red,new Point2D.Double(775,0), 7)
+				
+				//new DeadlyObstacle(new Rectangle2D.Double(-100,400,1480,400),new Color(232,153,7)).setTexture("Lava.png")
 				);
 
 		levels[1].defineBackground(
@@ -63,10 +81,14 @@ public class Registry {
 		
 	}
 	private static void register2(){
-		levels[2].define(2,new Point2D.Double(100,100),new Rectangle2D.Double(1270,0,10,800),levels[0]);
+		levels[2].define(2,new Point2D.Double(10,200),new Rectangle2D.Double(1270,0,10,800),levels[0],Level.MOUNTAINS);
 		levels[2].defineObstacles(
+				new Obstacle(new Rectangle2D.Double(0,200,200,600),new Color(60,46,7))
 				);
-		
+		levels[2].defineBackground(
+				);
+		levels[2].defineForeground(
+				);
 		
 	}
 }

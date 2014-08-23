@@ -5,19 +5,19 @@ import java.awt.geom.Rectangle2D;
 
 public class DeadlyObstacle extends Obstacle{
 
-	Obstacle ob;
-	public DeadlyObstacle(Obstacle o){
-		super(o.phys,o.col);
-		ob=o;
+	public DeadlyObstacle(Rectangle2D r,Color col){
+		super(r,col);
 	}
 	@Override
 	public void fill(Graphics2D g){
-		if(!Display.player.dead){
-		ob.fill(g);
-		if(Display.player.me(1,0).intersects(phys)||Display.player.me(-1,0).intersects(phys)||
-				Display.player.me(0,1).intersects(phys)||Display.player.me(0,-1).intersects(phys)){
-					Display.player.dead=true;
-				}
-	}
+		if(Display.player.me(0,1).intersects(phys))Display.player.dead=true;
+		if(Display.player.me(0,-1).intersects(phys))Display.player.dead=true;
+		if(Display.player.me(1,0).intersects(phys))Display.player.dead=true;
+		if(Display.player.me(-1,0).intersects(phys))Display.player.dead=true;
+		super.fill(g);
+		if(Display.player.me(0,1).intersects(phys))Display.player.dead=true;
+		if(Display.player.me(0,-1).intersects(phys))Display.player.dead=true;
+		if(Display.player.me(1,0).intersects(phys))Display.player.dead=true;
+		if(Display.player.me(-1,0).intersects(phys))Display.player.dead=true;
 	}
 }
