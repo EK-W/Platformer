@@ -15,7 +15,8 @@ import javax.imageio.ImageIO;
 
 public class Player {
 	double wheelMinSpeed = 2;
-	double movementSpeed = 1;
+	double walkSpeed = 1;
+	double runSpeed = 1.25;
 	double xVelDecay = 0.875;
 	int jumpHeight = 30;
 	Point2D loc;
@@ -31,24 +32,34 @@ public class Player {
 	int wheelCurrentDelay = 0;
 	boolean crouching = false;
 	void doMovement(){
+	double currentSpeed;
 	if(hitsObstacle(me())){
 		dead=true;
 	}
 		if(!dead){
 			if(Display.down){
+				if(!crouching)loc.setLocation(loc.getX(),loc.getY()-12);
+				height=23;
 				crouching=true;
 				xVelDecay=0.75;
+				System.out.println(height);
 			}else{
+				height=35;
 				crouching = false;
 				xVelDecay=0.875;
+			}
+			if(Display.shift){
+				currentSpeed=runSpeed;
+			}else{
+				currentSpeed=walkSpeed;
 			}
 		if(hitsObstacle(me(0,1))){
 			if(Display.up)yVel-=jumpHeight;
 		}else{
 			yVel+=2;
 		}
-		if(Display.left)xVel-=movementSpeed;
-		if(Display.right)xVel+=movementSpeed;
+		if(Display.left)xVel-=currentSpeed;
+		if(Display.right)xVel+=currentSpeed;
 		//if(Display.down)yVel+=1;
 		xVel*=xVelDecay;
 		yVel*=0.95;
@@ -84,7 +95,7 @@ public class Player {
 			loc.setLocation(loc.getX(),loc.getY()+yVel);
 		}
 		if(me().intersects(Registry.current.endLocation)){
-			Registry.setLevel(Registry.current.nextLevel.levelNum);
+			Registry.setLevel(Registry.current.nextLevel.levelID);
 		}
 		}
 	}

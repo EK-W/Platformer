@@ -18,9 +18,10 @@ int wait;
 boolean textured;
 BufferedImage img;
 public boolean collide = true;
-
+Rectangle2D original;
 public Obstacle(Rectangle2D setP, Color setC){
 	phys=setP;
+	original=setP;
 	delay = 1;
 	wait=0;
 	cols=new Color[]{setC};
@@ -71,5 +72,8 @@ public Obstacle setTexture(String texture){
 	    e.printStackTrace();
 	}
 	return this;
+}
+public void reset(){
+	phys=new Rectangle2D.Double(original.getX(),original.getY(),original.getWidth(),original.getHeight());
 }
 }

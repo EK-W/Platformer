@@ -37,6 +37,11 @@ public class MovingObstacle2 extends Obstacle{
 		udX=dX/delta;
 		udY=dY/delta;
 	}
+	@Override
+	public void reset(){
+		super.reset();
+		forwards=1;
+	}
 	public MovingObstacle2(Rectangle2D setP, Color setC,Point2D setP2, double setS, boolean BaF) {
 		super(setP, setC);
 		doSetup(setP,setC,setP2,setS,BaF);
@@ -70,13 +75,13 @@ public class MovingObstacle2 extends Obstacle{
 	}
 	if(Display.player.hitsObstacle(Display.player.me())&&collide)Display.player.dead=true;
 	if(tdX>0&&phys.getX()<oldPoint.getX()){phys=new Rectangle2D.Double(oldPoint.getX(),phys.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
-	if(tdX>0&&phys.getX()>newPoint.getX()){phys=new Rectangle2D.Double(newPoint.getX(),phys.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
-	if(tdX<0&&phys.getX()>oldPoint.getX()){phys=new Rectangle2D.Double(oldPoint.getX(),phys.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
-	if(tdX<0&&phys.getX()<newPoint.getX()){phys=new Rectangle2D.Double(newPoint.getX(),phys.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
-	if(tdY>0&&phys.getY()<oldPoint.getY()){phys=new Rectangle2D.Double(phys.getX(),oldPoint.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
-	if(tdY>0&&phys.getY()>newPoint.getY()){phys=new Rectangle2D.Double(phys.getX(),newPoint.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
-	if(tdY<0&&phys.getY()>oldPoint.getY()){phys=new Rectangle2D.Double(phys.getX(),oldPoint.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
-	if(tdY<0&&phys.getY()<newPoint.getY()){phys=new Rectangle2D.Double(phys.getX(),newPoint.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
+	else if(tdX>0&&phys.getX()>newPoint.getX()){phys=new Rectangle2D.Double(newPoint.getX(),phys.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
+	else if(tdX<0&&phys.getX()>oldPoint.getX()){phys=new Rectangle2D.Double(oldPoint.getX(),phys.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
+	else if(tdX<0&&phys.getX()<newPoint.getX()){phys=new Rectangle2D.Double(newPoint.getX(),phys.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
+	else if(tdY>0&&phys.getY()<oldPoint.getY()){phys=new Rectangle2D.Double(phys.getX(),oldPoint.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
+	else if(tdY>0&&phys.getY()>newPoint.getY()){phys=new Rectangle2D.Double(phys.getX(),newPoint.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
+	else if(tdY<0&&phys.getY()>oldPoint.getY()){phys=new Rectangle2D.Double(phys.getX(),oldPoint.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
+	else if(tdY<0&&phys.getY()<newPoint.getY()){phys=new Rectangle2D.Double(phys.getX(),newPoint.getY(),phys.getWidth(),phys.getHeight());forwards*=-1;}
 	boolean PlayerSafe = !Display.player.hitsObstacle(Display.player.me());
 	
 	if(moveWithPlayer){

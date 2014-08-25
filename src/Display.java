@@ -18,16 +18,18 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	public static boolean right = false;
 	public static boolean up = false;
 	public static boolean down = false;
+	public static boolean shift = false;
+	
 	int levelSelect = 0;
 	boolean slowMotion = false;
-	boolean debug = false;
+	boolean debug = true;
 	Point2D mouseLoc = new Point2D.Double();
 	
 	Timer animate = new Timer(25,this);
 	public static Player player = new Player(new Point2D.Double(100,100));
 	public void init(){
 		Registry.registerLevels();
-		Registry.setLevel(2);
+		Registry.setLevel(3);
 		setSize(1280,700);
 		animate.start();
 		addKeyListener(this);
@@ -40,8 +42,12 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 		if(debug){
 			g.setColor(Color.white);
 			g.fill(new Rectangle2D.Double(0,0,200,100));
+//			g.setColor(Color.red);
+//			g.fill(player.me());
+			player.loadImage(g);
+		}else{
+		
 		}
-		player.loadImage(g);
 		Registry.current.drawForeground(g);
 		if(player.dead){
 			g.drawString("Game Over",100,100);
@@ -63,6 +69,8 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 		if(e.getKeyCode()==KeyEvent.VK_RIGHT||e.getKeyCode()==KeyEvent.VK_D)right=true;
 		if(e.getKeyCode()==KeyEvent.VK_UP||e.getKeyCode()==KeyEvent.VK_W)up=true;
 		if(e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_S)down=true;
+		if(e.getKeyCode()==KeyEvent.VK_SHIFT)shift=true;
+		if(e.getKeyCode()==KeyEvent.VK_SPACE)doAtActionPerformed();
 		doSwitchLevel(e);
 	}
 	
@@ -99,7 +107,8 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 		if(e.getKeyCode()==KeyEvent.VK_RIGHT||e.getKeyCode()==KeyEvent.VK_D)right=false;
 		if(e.getKeyCode()==KeyEvent.VK_UP||e.getKeyCode()==KeyEvent.VK_W)up=false;
 		if(e.getKeyCode()==KeyEvent.VK_DOWN||e.getKeyCode()==KeyEvent.VK_S)down=false;
-		if(e.getKeyCode()==KeyEvent.VK_Z)slowMotion=!slowMotion;
+//		if(e.getKeyCode()==KeyEvent.VK_SHIFT)shift=false;
+//		if(e.getKeyCode()==KeyEvent.VK_Z)slowMotion=!slowMotion;
 	}
 
 	@Override
@@ -120,7 +129,7 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 			animate.setDelay(animate.getInitialDelay());
 		}
 		if(player.dead){
-			Registry.setLevel(Registry.current.levelNum);
+			Registry.setLevel(Registry.current.levelID);
 			player.dead=false;
 		}else{
 		player.doMovement();

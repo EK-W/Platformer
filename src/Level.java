@@ -8,7 +8,7 @@ public class Level {
 	public Point2D startLocation;
 	public Rectangle2D endLocation;
 	public Level nextLevel;
-	public int levelNum;
+	public int levelID;
 	int setting;
 	public static int MOUNTAINS=0;
 	public static int VOLCANO=1;
@@ -16,14 +16,15 @@ public class Level {
 	public Obstacle[] levelBackground = new Obstacle[1];
 	public Obstacle[] levelForeground = new Obstacle[1];
 	
-	public Level(){
+	public Level(int levelNum){
 		int backgroundType=MOUNTAINS;
+		levelID=levelNum;
 		defineObstacles();
 		defineBackground();
 		defineForeground();
 	}
-	public void define(int n,Point2D s,Rectangle2D e, Level l, int background){
-		levelNum=n;
+	public void define(Point2D s,Rectangle2D e, Level l, int background){
+		
 		startLocation=s;
 		endLocation=e;
 		nextLevel=l;
@@ -84,7 +85,11 @@ public class Level {
 			levelForeground[i+plus]=graphical[i];
 		}
 	}
-	
+	public void resetAll(){
+		for(int i=0;i<levelComponents.length;i++)levelComponents[i].reset();
+		for(int i=0;i<levelBackground.length;i++)levelBackground[i].reset();
+		for(int i=0;i<levelForeground.length;i++)levelForeground[i].reset();
+	}
 	public void drawLevel(Graphics2D g){
 		for(int i=0;i<levelBackground.length;i++)if(levelBackground[i]!=null)levelBackground[i].fill(g);
 		for(int i=0;i<levelComponents.length;i++)if(levelComponents[i]!=null)levelComponents[i].fill(g);
