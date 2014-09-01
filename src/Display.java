@@ -22,14 +22,14 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	
 	int levelSelect = 0;
 	boolean slowMotion = false;
-	boolean debug = true;
+	static boolean debug = true;
 	Point2D mouseLoc = new Point2D.Double();
 	
 	Timer animate = new Timer(25,this);
-	public static Player player = new Player(new Point2D.Double(100,100));
+	public static Player player = new Player();
 	public void init(){
 		Registry.registerLevels();
-		Registry.setLevel(3);
+		Registry.setLevel(0);
 		setSize(1280,700);
 		animate.start();
 		addKeyListener(this);
@@ -37,29 +37,13 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	}
 	public void paint(Graphics g2){
 		Graphics2D g = (Graphics2D) g2;
-		
 		Registry.current.drawLevel(g);
-		if(debug){
-			g.setColor(Color.white);
-			g.fill(new Rectangle2D.Double(0,0,200,100));
-//			g.setColor(Color.red);
-//			g.fill(player.me());
-			player.loadImage(g);
-		}else{
-		
-		}
-		Registry.current.drawForeground(g);
-		if(player.dead){
-			g.drawString("Game Over",100,100);
-		}
-		if(debug){
-			g.setColor(Color.black);
-			g.drawString(String.valueOf(mouseLoc.getX()),5,15);
-			g.drawString(String.valueOf(mouseLoc.getY()),5,30);
-			g.drawString(String.valueOf(player.loc.getX()),5,45);
-			g.drawString(String.valueOf(player.loc.getY()),5,60);
-			g.drawString(String.valueOf(levelSelect), 5,75);
-		}
+		g.setColor(Color.black);
+		g.drawString(String.valueOf(mouseLoc.getX()),5, 15);
+		g.drawString(String.valueOf(mouseLoc.getY()),5, 30);
+		g.drawString(String.valueOf(player.loc.getX()),5, 45);
+		g.drawString(String.valueOf(player.loc.getY()),5, 60);
+		player.loadImage(g);
 	}
 	
 	
@@ -95,7 +79,7 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 				levelSelect/=10;
 			}
 			if(e.getKeyCode()==KeyEvent.VK_ENTER){
-				Registry.setLevel(levelSelect%Registry.levels.length);
+				Registry.setLevel(levelSelect);
 					levelSelect=0;
 			}
 		}
