@@ -26,10 +26,12 @@ public class Obstacle2 {
 	boolean deadly;
 	boolean canMove;
 	double speed;
+	double relXT,relYT;
 	int to,from;
 	double[] moveX,moveY;
 	boolean debug;
 	boolean collide;
+	boolean relative;
 	double setOpacityMult;
 
 	public Obstacle2(){
@@ -43,7 +45,14 @@ public class Obstacle2 {
 		collide=true;
 		textured=false;
 		debug=false;
+		relative=false;
 		setOpacityMult = 1;
+	}
+	public Obstacle2 relative(double x, double y){
+		relative=true;
+		relXT=x;
+		relYT=y;
+		return this;
 	}
 	
 	public Obstacle2 setBounds(double x, double y, double width, double height){
@@ -63,13 +72,32 @@ public class Obstacle2 {
 		File here = new File(".");
 		String location = ".";
 		try {
-		    location = here.getCanonicalPath().substring(0,here.getCanonicalPath().length()-3);
+		    location = here.getCanonicalPath();
 		    img = ImageIO.read(new File(location+t));
 		    textured=true;
 		} catch (IOException e) {
 			textured=false;
 		    e.printStackTrace();
 		}
+		
+		return this;
+	}
+	public Obstacle2 textureBounds(String t){
+		File here = new File(".");
+		String location = ".";
+		try {
+		    location = here.getCanonicalPath();
+		    img = ImageIO.read(new File(location+t));
+		    textured=true;
+		} catch (IOException e) {
+			textured=false;
+		    e.printStackTrace();
+		}
+		centerX=img.getWidth()/2;
+		centerY=img.getHeight()/2;
+		width=img.getWidth();
+		height=img.getHeight();
+		//System.out.println(width +" | "+height);
 		
 		return this;
 	}
@@ -101,6 +129,10 @@ public class Obstacle2 {
 	
 	public void fill(Graphics2D g){
 		if(canMove)doMovement();
+		if(relative){
+			centerX=(img.getWidth()/2)-(Display.player.loc.getX()/relXT);
+			centerY=(img.getHeight()/2)-(Display.player.loc.getY()/relYT);
+		}
 		testTouching();
 		if(textured){
 			int xl = (int) Math.round(centerX-(width/2));
@@ -136,7 +168,7 @@ public class Obstacle2 {
 			Display.player.loc.setLocation(Display.player.loc.getX()+(getRect().getCenterX()-prev.getX()),
 					Display.player.loc.getY());
 		}
-		while(playerSafe&&getRect().intersects(Display.player.me())&&collide){
+		while(playerSafe&&Display.player.hitsObstacle(Display.player.me())&&collide){
 			Display.player.loc.setLocation(Display.player.loc.getX()+tX,Display.player.loc.getY());
 		}
 		if((centerY>moveY[to]&&centerY+(uvy*speed)<moveY[to])||(centerY<moveY[to]&&centerY+(uvy*speed)>moveY[to])){
@@ -148,7 +180,7 @@ public class Obstacle2 {
 			Display.player.loc.setLocation(Display.player.loc.getX(),
 					Display.player.loc.getY()+(centerY-prev.getY()));
 		}
-		while(playerSafe&&getRect().intersects(Display.player.me())&&collide){
+		while(playerSafe&&Display.player.hitsObstacle(Display.player.me())&&collide){
 			Display.player.loc.setLocation(Display.player.loc.getX(),Display.player.loc.getY()+(tY));
 		}
 		if(Math.round(getRect().getCenterX())==Math.round(moveX[to])){

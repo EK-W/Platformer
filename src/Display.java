@@ -1,7 +1,11 @@
-import java.applet.Applet;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,10 +14,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Display extends Applet implements KeyListener, ActionListener, MouseMotionListener{
+public class Display extends JFrame implements KeyListener, ActionListener, MouseMotionListener{
 	public static boolean left = false;
 	public static boolean right = false;
 	public static boolean up = false;
@@ -24,10 +31,17 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	boolean slowMotion = false;
 	static boolean debug = true;
 	Point2D mouseLoc = new Point2D.Double();
-	
+	static Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	Timer animate = new Timer(25,this);
 	public static Player player = new Player();
-	public void init(){
+	public Display(){
+		setPreferredSize(dim);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setUndecorated(true);
+		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
+		device.setFullScreenWindow(this);
+		setVisible(true);
+		
 		Registry.registerLevels();
 		Registry.setLevel(0);
 		setSize(1280,700);
@@ -37,7 +51,8 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	}
 	public void paint(Graphics g2){
 		Graphics2D g = (Graphics2D) g2;
-		Registry.current.drawLevel(g);
+		g.fill(new Rectangle2D.Double(-100,-100,1480,1000));
+		if(Registry.current!=null)Registry.current.drawLevel(g);
 		g.setColor(Color.black);
 		g.drawString(String.valueOf(mouseLoc.getX()),5, 15);
 		g.drawString(String.valueOf(mouseLoc.getY()),5, 30);
@@ -57,6 +72,8 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 		if(e.getKeyCode()==KeyEvent.VK_SPACE)doAtActionPerformed();
 		doSwitchLevel(e);
 	}
+	
+	
 	
 	private void doSwitchLevel (KeyEvent e){
 		if(debug){
@@ -129,5 +146,10 @@ public class Display extends Applet implements KeyListener, ActionListener, Mous
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		mouseLoc.setLocation(e.getPoint());	
+	}
+	public static void main(String args[]){
+		
+		
+		Display d = new Display();
 	}
 }

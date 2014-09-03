@@ -1,4 +1,5 @@
-Bounds 640 650 100 100 Color 128 128 0 128 Move 1 640 250 50 250 50 650 1230 400 end
-//Bounds 300 300 102 202 Color 255 0 0 255 end
-//Bounds 300 300 100 200 Texture Assets/error.png end
-debug Bounds 50 650 100 100 Texture Assets/error.png Move 1 1230 650 noCollide end
+50 300
+Background /Assets/Scenery/Sky.png 0 0 end
+Background /Assets/Scenery/Mountains_0.png 51.2 28 end
+Background /Assets/Scenery/Mountains_1.png 25.6 14 end
+Background /Assets/Scenery/Mountains_2.png 12.8 7 end

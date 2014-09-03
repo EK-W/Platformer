@@ -10,7 +10,7 @@ public class Registry {
 	}
 	public static void setLevel(int num){
 		levelNum=num; 
-		current = new readerLevel("Levels/level"+num+".txt",num);
+		current = new readerLevel("/Levels/level"+num+".txt",num);
 		Display.player.loc.setLocation(current.startLocation);
 	}
 }

@@ -85,15 +85,15 @@ public class Player {
 			animationPhase = animationPhase%4;
 		}
 		try {
-			location = here.getCanonicalPath().substring(0,here.getCanonicalPath().length()-3);
+			location = here.getCanonicalPath();
 			
 			Image img;
 			if(crouching){
-				img = ImageIO.read(new File(location+"UniRobot1/Crouch.png"));
+				img = ImageIO.read(new File(location+"/Assets/UniRobot1/Crouch.png"));
 			}else{
-				img = ImageIO.read(new File(location+"UniRobot1/Stand.png"));
+				img = ImageIO.read(new File(location+"/Assets/UniRobot1/Stand.png"));
 			}
-			 Image img2 = ImageIO.read(new File(location+"UniRobot1/Wheel_"+animationPhase+".png"));
+			 Image img2 = ImageIO.read(new File(location+"/Assets/UniRobot1/Wheel_"+animationPhase+".png"));
 			 if(xVel>0.01){
 				 flipped=false;
 			 }
@@ -122,10 +122,18 @@ public class Player {
 	}
 	public boolean hitsObstacle(Rectangle2D test){
 		for(int i=0;i<Registry.current.components.length;i++){
-			if(Registry.current.components[i].getRect().intersects(test)&&Registry.current.components[i].collide){
-				return true;
-			}
+			if(test.intersects(Registry.current.components[i].getRect()))return true;
 		}
+		return false;
+	}
+	public boolean checkHit(Rectangle2D test,BufferedImage hits ){
+			for(int i=(int) test.getX();i<=test.getX()+test.getWidth();i++){
+				for(int j=(int) test.getY();j<test.getY()+test.getHeight();j++){
+					if(hits.getRGB(i,j)!=0x00){
+						return true;
+					}
+				}
+			}
 		return false;
 	}
 }
